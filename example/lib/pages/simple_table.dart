@@ -111,6 +111,7 @@ class _SimpleTableState extends State<SimpleTable> {
 '{"Hiearchy":"Griffin Industrial Realty, Inc.","Pos":3529446.1867,"BNLMDT":6336582.808,"BNLTYD":4204392.1133,"MMV":2728186.3899,"EPD":1752470.7439},'
 '{"Hiearchy":"Kite Realty Group Trust","Pos":-4755640.0302,"BNLMDT":-6088098.4579,"BNLTYD":-1094945.8854,"MMV":3726856.9815,"EPD":-9422451.019}]';
   bool toggle = true;
+  int paginationNumber = 15;
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +162,7 @@ class _SimpleTableState extends State<SimpleTable> {
                     },
                     allowRowHighlight: true,
                     rowHighlightColor: Colors.yellow[500].withOpacity(0.7),
-                    paginationRowCount: 15,
+                    paginationRowCount: paginationNumber,
                   ),
                   SizedBox(
                     height: 40.0,
@@ -173,15 +174,38 @@ class _SimpleTableState extends State<SimpleTable> {
                 child: Text(getPrettyJSONString(jsonSample)),
               ),
       ),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.grid_on),
-          onPressed: () {
-            setState(
-              () {
-                toggle = !toggle;
-              },
-            );
-          }),
+        floatingActionButton: Stack(
+          children: <Widget>[
+            Padding(padding: EdgeInsets.only(left:31),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: FloatingActionButton(
+                  child: Icon(Icons.unfold_less),
+                  onPressed: () {
+                    setState(
+                    () {
+                    //toggle = !toggle;
+                    paginationNumber = paginationNumber-5;
+                },
+                );
+              }),
+              ),),
+
+            Align(
+              alignment: Alignment.bottomRight,
+              child: FloatingActionButton(
+                child: Icon(Icons.unfold_more),
+                onPressed: () {
+                  setState(
+                        () {
+                      //toggle = !toggle;
+                      paginationNumber = paginationNumber+5;
+                    },
+                  );
+                }),
+            ),
+          ],
+        )
     );
   }
 
