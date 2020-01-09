@@ -112,6 +112,7 @@ class _SimpleTableState extends State<SimpleTable> {
 '{"Hiearchy":"Kite Realty Group Trust","Pos":-4755640.0302,"BNLMDT":-6088098.4579,"BNLTYD":-1094945.8854,"MMV":3726856.9815,"EPD":-9422451.019}]';
   bool toggle = true;
   int paginationNumber = 15;
+  double fontSize = 18.0;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +139,7 @@ class _SimpleTableState extends State<SimpleTable> {
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.display1.copyWith(
                               fontWeight: FontWeight.w700,
-                              fontSize: 18.0,
+                              fontSize: fontSize,
                               color: Colors.black87),
                         ),
                       );
@@ -155,8 +156,7 @@ class _SimpleTableState extends State<SimpleTable> {
                           value,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.display1.copyWith(
-//                              fontSize: 14.0, color: Colors.green[900]),
-                              fontSize: 18.0, color: setColor(value.toString())),
+                              fontSize: fontSize, color: setColor(value.toString())),
                         ),
                       );
                     },
@@ -184,7 +184,6 @@ class _SimpleTableState extends State<SimpleTable> {
                   onPressed: () {
                     setState(
                     () {
-                    //toggle = !toggle;
                       if (paginationNumber > 5) {
                         paginationNumber = paginationNumber-5;
                       }
@@ -194,17 +193,32 @@ class _SimpleTableState extends State<SimpleTable> {
               ),),
 
             Align(
-              alignment: Alignment.bottomRight,
+              alignment: Alignment.bottomCenter,
               child: FloatingActionButton(
-                child: Icon(Icons.unfold_more),
+                child: Icon(Icons.format_size),
                 onPressed: () {
                   setState(
                         () {
-                      //toggle = !toggle;
-                      paginationNumber = paginationNumber+5;
+                      fontSize = fontSize + 2;
+                      if (fontSize > 20){
+                        fontSize = 12;
+                      }
                     },
                   );
                 }),
+            ),
+
+            Align(
+              alignment: Alignment.bottomRight,
+              child: FloatingActionButton(
+                  child: Icon(Icons.unfold_more),
+                  onPressed: () {
+                    setState(
+                          () {
+                        paginationNumber = paginationNumber+5;
+                      },
+                    );
+                  }),
             ),
           ],
         )
