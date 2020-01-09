@@ -185,7 +185,9 @@ class _SimpleTableState extends State<SimpleTable> {
                     setState(
                     () {
                     //toggle = !toggle;
-                    paginationNumber = paginationNumber-5;
+                      if (paginationNumber > 5) {
+                        paginationNumber = paginationNumber-5;
+                      }
                 },
                 );
               }),
