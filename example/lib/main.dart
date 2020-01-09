@@ -17,6 +17,15 @@ void main() {
   runApp(MyApp());
 }
 
+List<Color> _colors = [ //Get list of colors
+  Colors.blue,
+  Colors.red,
+  Colors.yellow,
+  Colors.teal,
+  Colors.purple
+];
+int _currentIndex = 0;
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -24,7 +33,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Json Table Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue
+        primarySwatch: _colors[_currentIndex],
       ),
       debugShowCheckedModeBanner: false,
       home: RootPage(),
@@ -44,9 +53,14 @@ class RootPage extends StatelessWidget {
             // overflow menu
             PopupMenuButton<Choice>(
               onSelected: (Choice) {
-                print(Choice.title);
+                print("Selected: " + Choice.title);
+                print("Current color number: $_currentIndex");
+
+                if (Choice.action == "color") {
+                  _showColorPopup(context);
+                }
                 if (Choice.action == "about") {
-                  _showPopup(context);
+                  _showAboutPopup(context);
                 }
               },
               itemBuilder: (BuildContext context) {
@@ -69,7 +83,47 @@ class RootPage extends StatelessWidget {
     );
   }
 
-  void _showPopup(context){
+  void _showColorPopup(context){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("App Color"),
+          content: new Text("Choose from colors below:"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Blue"),
+              onPressed: () {
+                updateColor(0);
+                Navigator.of(context).pop();
+                build(context);
+              },
+            ),
+            new FlatButton(
+              child: new Text("Red"),
+              onPressed: () {
+                updateColor(1);
+                Navigator.of(context).pop();
+                build(context);
+              },
+            ),
+            new FlatButton(
+              child: new Text("Yellow"),
+              onPressed: () {
+                updateColor(2);
+                Navigator.of(context).pop();
+                build(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showAboutPopup(context){
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -91,6 +145,10 @@ class RootPage extends StatelessWidget {
     );
   }
 
+  void updateColor(int value) {
+    _currentIndex = value;
+  }
+
 }
 
 class Choice {
@@ -100,7 +158,7 @@ class Choice {
 }
 
 const List<Choice> choices = <Choice>[
-  Choice(title: 'Menu 1', action: "action 1"),
+  Choice(title: 'App color', action: "color"),
   Choice(title: 'About', action: "about"),
 
 ];
