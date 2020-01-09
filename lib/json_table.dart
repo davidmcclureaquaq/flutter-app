@@ -84,6 +84,7 @@ class _JsonTableState extends State<JsonTable> {
                 title: Text(
                   "ADD FILTERS (${filterHeaderList.length})",
                   style: TextStyle(
+                    color: Colors.green,
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
                   ),

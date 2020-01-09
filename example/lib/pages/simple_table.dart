@@ -137,7 +137,7 @@ class _SimpleTableState extends State<SimpleTable> {
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.display1.copyWith(
                               fontWeight: FontWeight.w700,
-                              fontSize: 14.0,
+                              fontSize: 18.0,
                               color: Colors.black87),
                         ),
                       );
@@ -154,7 +154,8 @@ class _SimpleTableState extends State<SimpleTable> {
                           value,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.display1.copyWith(
-                              fontSize: 14.0, color: Colors.grey[900]),
+//                              fontSize: 14.0, color: Colors.green[900]),
+                              fontSize: 18.0, color: setColor(value.toString())),
                         ),
                       );
                     },
@@ -188,5 +189,21 @@ class _SimpleTableState extends State<SimpleTable> {
     JsonEncoder encoder = new JsonEncoder.withIndent('  ');
     String jsonString = encoder.convert(json.decode(jsonObject));
     return jsonString;
+  }
+
+  Color setColor(String val){
+    try{
+      if (double.parse(val) == 0){
+        return Colors.amber;
+      } else {
+        if (double.parse(val) > 0){
+          return Colors.green;
+        } else{
+          return Colors.red;
+        }
+      }
+    }catch(e){
+      return Colors.grey[900];
+    }
   }
 }

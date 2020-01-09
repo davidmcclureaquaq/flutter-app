@@ -48,7 +48,7 @@ class TableColumn extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 14.0,
-                      color: Colors.black87,
+                      color: Colors.red,
                     ),
                   ),
                 ),
@@ -87,7 +87,7 @@ class TableColumn extends StatelessWidget {
                                     decoration: BoxDecoration(
                                         border: Border.all(
                                       width: 0.5,
-                                      color: Colors.grey.withOpacity(0.5),
+                                      color: Colors.red,
                                     )),
                                     child: Text(
                                       getFormattedValue(
@@ -99,6 +99,7 @@ class TableColumn extends StatelessWidget {
                                       ),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
+                                        color: Colors.green,
                                         fontSize: 14.0,
                                       ),
                                     ),
