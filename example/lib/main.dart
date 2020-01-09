@@ -76,11 +76,6 @@ class RootPage extends StatelessWidget {
     );
   }
 
-
-  void setState(Choice input) {
-    _selectedChoice = input.title;
-  }
-
   void _showPopup(context){
     showDialog(
       context: context,
