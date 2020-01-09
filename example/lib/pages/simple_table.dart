@@ -165,7 +165,7 @@ class _SimpleTableState extends State<SimpleTable> {
                   SizedBox(
                     height: 40.0,
                   ),
-                  Text("Simple table which creates table direclty from json")
+                  Text("Simple table which creates table directly from json")
                 ],
               )
             : Center(

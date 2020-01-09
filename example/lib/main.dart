@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Json Table Demo',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.blue
       ),
       debugShowCheckedModeBanner: false,
       home: RootPage(),
@@ -40,12 +40,30 @@ class RootPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Table Widget"),
+          actions: <Widget>[
+            // overflow menu
+            PopupMenuButton<Choice>(
+              onSelected: (Choice) {
+                print(Choice.title);
+                if (Choice.action == "about") {
+                  _showPopup(context);
+                }
+              },
+              itemBuilder: (BuildContext context) {
+                return choices.skip(0).map((Choice choice) {
+                  return PopupMenuItem<Choice>(
+                    value: choice,
+                    child: Text(choice.title),
+                  );
+                }).toList();
+              },
+            ),
+          ],
           bottom: TabBar(
             tabs: <Widget>[
               Tab(
                 text: "Simple Table",
               ),
-
             ],
           ),
         ),
@@ -57,4 +75,44 @@ class RootPage extends StatelessWidget {
       ),
     );
   }
+
+
+  void setState(Choice input) {
+    _selectedChoice = input.title;
+  }
+
+  void _showPopup(context){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Millennium mobile app"),
+          content: new Text("Version: 1.0, For more information contact dev@MLP.com"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
+
+class Choice {
+  const Choice({ this.title, this.action });
+  final String title;
+  final String action;
+}
+
+const List<Choice> choices = <Choice>[
+  Choice(title: 'Menu 1', action: "action 1"),
+  Choice(title: 'About', action: "about"),
+
+];
