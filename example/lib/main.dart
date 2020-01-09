@@ -39,7 +39,7 @@ class RootPage extends StatelessWidget {
       length: 1,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Table Widget"),
+          title: Text("Meteorite Mobile"),
           actions: <Widget>[
             // overflow menu
             PopupMenuButton<Choice>(
@@ -59,13 +59,6 @@ class RootPage extends StatelessWidget {
               },
             ),
           ],
-          bottom: TabBar(
-            tabs: <Widget>[
-              Tab(
-                text: "Simple Table",
-              ),
-            ],
-          ),
         ),
         body: TabBarView(
           children: <Widget>[
