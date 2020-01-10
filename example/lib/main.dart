@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'pages/data_grid.dart';
 import 'pages/simple_table.dart';
+
 
 void enablePlatformOverrideForDesktop() {
   if (!kIsWeb && (Platform.isMacOS || Platform.isWindows || Platform.isLinux)) {
@@ -13,7 +15,6 @@ void enablePlatformOverrideForDesktop() {
 
 void main() {
   enablePlatformOverrideForDesktop();
-
   runApp(MyApp());
 }
 
@@ -45,10 +46,20 @@ class RootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 1,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text("Meteorite Mobile"),
+          bottom: TabBar(
+          tabs: <Widget>[
+            Tab(
+            text: "Json Table",
+            ),
+            Tab(
+              text: "Data Grid",
+            ),
+          ],
+          ),
           actions: <Widget>[
             // overflow menu
             PopupMenuButton<Choice>(
@@ -77,6 +88,7 @@ class RootPage extends StatelessWidget {
         body: TabBarView(
           children: <Widget>[
             SimpleTable(),
+            DataGrid(),
           ],
         ),
       ),
