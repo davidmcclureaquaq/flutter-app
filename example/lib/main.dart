@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/data_grid.dart';
+import 'pages/paginated_grid.dart';
 import 'pages/simple_table.dart';
 
 
@@ -46,7 +47,7 @@ class RootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: Text("Meteorite Mobile"),
@@ -57,6 +58,9 @@ class RootPage extends StatelessWidget {
             ),
             Tab(
               text: "Data Grid",
+            ),
+            Tab(
+              text: "Paginated Grid",
             ),
           ],
           ),
@@ -89,6 +93,7 @@ class RootPage extends StatelessWidget {
           children: <Widget>[
             SimpleTable(),
             DataGrid(),
+            PaginatedGrid(),
           ],
         ),
       ),
