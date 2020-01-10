@@ -5,38 +5,159 @@ class DataGrid extends StatefulWidget {
   _DataGridState createState() => _DataGridState();
 }
 
+bool isSorted = false;
+
 class _DataGridState extends State<DataGrid> {
   Widget bodyData() => DataTable(
       columnSpacing: 0,
+      sortColumnIndex: 0,
+      sortAscending: true,
       onSelectAll: (b) {},
       columns: <DataColumn>[
-        DataColumn(label: Text("Hierarchy",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16)),),
-        DataColumn(label: Text("Position", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16)),),
-        DataColumn(label: Text("BNLMDT",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16)),),
-        DataColumn(label: Text("BNLTYD",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16)),),
-        DataColumn(label: Text("MMV",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16)),),
-        DataColumn(label: Text("EPD",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16)),),
+        DataColumn(
+          label: Text("Hierarchy",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          onSort: (i, b) {
+            sortColumn(1);
+          },
+        ),
+        DataColumn(
+          label: Text("Position",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          onSort: (i, b) {
+            sortColumn(2);
+          },
+        ),
+        DataColumn(
+          label: Text("BNLMDT",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          onSort: (i, b) {
+            sortColumn(3);
+          },
+        ),
+        DataColumn(
+          label: Text("BNLTYD",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          onSort: (i, b) {
+            sortColumn(4);
+          },
+        ),
+        DataColumn(
+          label: Text("MMV",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          onSort: (i, b) {
+            sortColumn(5);
+          },
+        ),
+        DataColumn(
+          label: Text("EPD",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          onSort: (i, b) {
+            sortColumn(6);
+          },
+        ),
       ],
       rows: sampledata
           .map(
             (data) => DataRow(
-          cells: [
-            DataCell(Text(data.Hierarchy,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),placeholder: true,),
-            DataCell(Text(data.Position.toString(),style: TextStyle(color: setColor(data.Position.toInt()),fontSize: 14)),placeholder: false,),
-            DataCell(Text(data.BNL_MDT.toString(),style: TextStyle(color: setColor(data.Position.toInt()),fontSize: 14)),placeholder: false,),
-            DataCell(Text(data.BNL_TYD.toString(),style: TextStyle(color: setColor(data.Position.toInt()),fontSize: 14)),placeholder: false,),
-            DataCell( Text(data.MMV.toString(),style: TextStyle(color: setColor(data.Position.toInt()),fontSize: 14)),placeholder: false,),
-            DataCell(Text(data.EPD$.toString(),style: TextStyle(color: setColor(data.Position.toInt()),fontSize: 14)),placeholder: false,)
-          ],
-        ),
-      )
+              cells: [
+                DataCell(
+                  Text(data.Hierarchy,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                  placeholder: true,
+                ),
+                DataCell(
+                  Text(data.Position.toString(),
+                      style: TextStyle(
+                          color: setColor(data.Position.toInt()),
+                          fontSize: 14)),
+                  placeholder: false,
+                ),
+                DataCell(
+                  Text(data.BNL_MDT.toString(),
+                      style: TextStyle(
+                          color: setColor(data.Position.toInt()),
+                          fontSize: 14)),
+                  placeholder: false,
+                ),
+                DataCell(
+                  Text(data.BNL_TYD.toString(),
+                      style: TextStyle(
+                          color: setColor(data.Position.toInt()),
+                          fontSize: 14)),
+                  placeholder: false,
+                ),
+                DataCell(
+                  Text(data.MMV.toString(),
+                      style: TextStyle(
+                          color: setColor(data.Position.toInt()),
+                          fontSize: 14)),
+                  placeholder: false,
+                ),
+                DataCell(
+                  Text(data.EPD$.toString(),
+                      style: TextStyle(
+                          color: setColor(data.Position.toInt()),
+                          fontSize: 14)),
+                  placeholder: false,
+                )
+              ],
+            ),
+          )
           .toList());
+
+  void sortColumn(int columnIndex) {
+    setState(() {
+      if(isSorted == false) {
+        if (columnIndex == 1) {
+          sampledata.sort((a, b) => a.Hierarchy.compareTo(b.Hierarchy));
+        }
+        if (columnIndex == 2) {
+          sampledata.sort((a, b) => a.Position.compareTo(b.Position));
+        }
+        if (columnIndex == 3) {
+          sampledata.sort((a, b) => a.BNL_MDT.compareTo(b.BNL_MDT));
+        }
+        if (columnIndex == 4) {
+          sampledata.sort((a, b) => a.BNL_TYD.compareTo(b.BNL_TYD));
+        }
+        if (columnIndex == 5) {
+          sampledata.sort((a, b) => a.MMV.compareTo(b.MMV));
+        }
+        if (columnIndex == 6) {
+          sampledata.sort((a, b) => a.EPD$.compareTo(b.EPD$));
+        }
+        isSorted = true;
+      } else {
+        if (columnIndex == 1) {
+          sampledata.sort((a, b) => b.Hierarchy.compareTo(a.Hierarchy));
+        }
+        if (columnIndex == 2) {
+          sampledata.sort((a, b) => b.Position.compareTo(a.Position));
+        }
+        if (columnIndex == 3) {
+          sampledata.sort((a, b) => b.BNL_MDT.compareTo(a.BNL_MDT));
+        }
+        if (columnIndex == 4) {
+          sampledata.sort((a, b) => b.BNL_TYD.compareTo(a.BNL_TYD));
+        }
+        if (columnIndex == 5) {
+          sampledata.sort((a, b) => b.MMV.compareTo(a.MMV));
+        }
+        if (columnIndex == 6) {
+          sampledata.sort((a, b) => b.EPD$.compareTo(a.EPD$));
+        }
+        isSorted = false;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Beteorite Mobile"),
+          title: Text("Meteorite Mobile"),
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -48,13 +169,12 @@ class _DataGridState extends State<DataGrid> {
   }
 }
 
-MaterialColor setColor(int num){
-  if(num == 0){
-    print(jsonSample);
+MaterialColor setColor(int num) {
+  if (num == 0) {
     return Colors.amber;
-  }else if(num < 0){
+  } else if (num < 0) {
     return Colors.red;
-  } else{
+  } else {
     return Colors.green;
   }
 }
@@ -68,25 +188,108 @@ class GridData {
   int EPD$;
 
 //  GridData({this.Hierarchy, this.Position, this.BNLMDT, this.BNLTYD});
-  GridData({this.Hierarchy, this.Position, this.BNL_MDT, this.BNL_TYD, this.MMV, this.EPD$});
+  GridData(
+      {this.Hierarchy,
+      this.Position,
+      this.BNL_MDT,
+      this.BNL_TYD,
+      this.MMV,
+      this.EPD$});
 }
 
 var sampledata = <GridData>[
-  GridData(Hierarchy: "Grand Total", Position: 1003992, BNL_MDT: 435, BNL_TYD: 2332, MMV: 345345, EPD$: -34543),
-  GridData(Hierarchy: "JGLOBAL", Position: 3884783, BNL_MDT: -454466, BNL_TYD: 5654654, MMV: 3453466, EPD$: -333883),
-  GridData(Hierarchy: "ADOWING", Position: -5994, BNL_MDT: 0, BNL_TYD: -399, MMV: 2333, EPD$: 234),
-  GridData(Hierarchy: "STATINDIGO", Position: 399489, BNL_MDT: -33, BNL_TYD: 6644, MMV: 2343234, EPD$: 634534),
-  GridData(Hierarchy: "Capital Trust, Inc", Position: 399489, BNL_MDT: -33, BNL_TYD: 6644, MMV: 2343234, EPD$: 634534),
-  GridData(Hierarchy: "STATALPHA", Position: -66556, BNL_MDT: 13003992, BNL_TYD: -23423, MMV: 44433, EPD$: -4443),
-  GridData(Hierarchy: "Jupai Holdings Limited", Position: 0, BNL_MDT: 33345, BNL_TYD: 23233, MMV: 4353543, EPD$: -34534),
-  GridData(Hierarchy: "MICRO", Position: 0, BNL_MDT: 33345, BNL_TYD: 23233, MMV: 4353543, EPD$: -34534),
-  GridData(Hierarchy: "Kennametal Inc.", Position: 0, BNL_MDT: 33345, BNL_TYD: 23233, MMV: 4353543, EPD$: -34534),
-  GridData(Hierarchy: "Fifth Street Finance Corp.", Position: 38829, BNL_MDT: -59955, BNL_TYD: 3465363, MMV: 5435, EPD$: 23432),
-  GridData(Hierarchy: "MORTGAGESTAT", Position: 38829, BNL_MDT: -59955, BNL_TYD: 3465363, MMV: 5435, EPD$: 23432),
-  GridData(Hierarchy: "CBL & Associates Properties, Inc.", Position: 4, BNL_MDT: 0, BNL_TYD: -449, MMV: 33444, EPD$: 654),
-  GridData(Hierarchy: "CAPITALSUNNINGS", Position: 4, BNL_MDT: 0, BNL_TYD: -449, MMV: 33444, EPD$: 654),
+  GridData(
+      Hierarchy: "Grand Total",
+      Position: 1003992,
+      BNL_MDT: 435,
+      BNL_TYD: 2332,
+      MMV: 345345,
+      EPD$: -34543),
+  GridData(
+      Hierarchy: "JGLOBAL",
+      Position: 3884783,
+      BNL_MDT: -454466,
+      BNL_TYD: 5654654,
+      MMV: 3453466,
+      EPD$: -333883),
+  GridData(
+      Hierarchy: "ADOWING",
+      Position: -5994,
+      BNL_MDT: 0,
+      BNL_TYD: -399,
+      MMV: 2333,
+      EPD$: 234),
+  GridData(
+      Hierarchy: "STATINDIGO",
+      Position: 399489,
+      BNL_MDT: -33,
+      BNL_TYD: 6644,
+      MMV: 2343234,
+      EPD$: 634534),
+  GridData(
+      Hierarchy: "Capital Trust, Inc",
+      Position: 399489,
+      BNL_MDT: -33,
+      BNL_TYD: 6644,
+      MMV: 2343234,
+      EPD$: 634534),
+  GridData(
+      Hierarchy: "STATALPHA",
+      Position: -66556,
+      BNL_MDT: 13003992,
+      BNL_TYD: -23423,
+      MMV: 44433,
+      EPD$: -4443),
+  GridData(
+      Hierarchy: "Jupai Holdings Limited",
+      Position: 0,
+      BNL_MDT: 33345,
+      BNL_TYD: 23233,
+      MMV: 4353543,
+      EPD$: -34534),
+  GridData(
+      Hierarchy: "MICRO",
+      Position: 0,
+      BNL_MDT: 33345,
+      BNL_TYD: 23233,
+      MMV: 4353543,
+      EPD$: -34534),
+  GridData(
+      Hierarchy: "Kennametal Inc.",
+      Position: 0,
+      BNL_MDT: 33345,
+      BNL_TYD: 23233,
+      MMV: 4353543,
+      EPD$: -34534),
+  GridData(
+      Hierarchy: "Fifth Street Finance Corp.",
+      Position: 38829,
+      BNL_MDT: -59955,
+      BNL_TYD: 3465363,
+      MMV: 5435,
+      EPD$: 23432),
+  GridData(
+      Hierarchy: "MORTGAGESTAT",
+      Position: 38829,
+      BNL_MDT: -59955,
+      BNL_TYD: 3465363,
+      MMV: 5435,
+      EPD$: 23432),
+  GridData(
+      Hierarchy: "CBL & Associates Properties, Inc.",
+      Position: 4,
+      BNL_MDT: 0,
+      BNL_TYD: -449,
+      MMV: 33444,
+      EPD$: 654),
+  GridData(
+      Hierarchy: "CAPITALSUNNINGS",
+      Position: 4,
+      BNL_MDT: 0,
+      BNL_TYD: -449,
+      MMV: 33444,
+      EPD$: 654),
 ];
-
 
 class SampleData {
   String hiearchy;
