@@ -156,9 +156,6 @@ class _DataGridState extends State<DataGrid> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Meteorite Mobile"),
-        ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: SingleChildScrollView(

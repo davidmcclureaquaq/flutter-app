@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:example/blocs/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'pages/data_grid.dart';
 import 'pages/paginated_grid.dart';
@@ -19,24 +21,34 @@ void main() {
   runApp(MyApp());
 }
 
-List<Color> _colors = [ //Get list of colors
-  Colors.blue,
-  Colors.red,
-  Colors.yellow,
-  Colors.teal,
-  Colors.purple
-];
 int _currentIndex = 0;
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider<ThemeChanger>(
+      create: (_) => ThemeChanger(ThemeData.dark()),
+      child: MaterialAppWithTheme(),
+    );
+  }
+}
+
+@override
+class MaterialAppWithTheme extends StatelessWidget {
+  const MaterialAppWithTheme({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     return MaterialApp(
       title: 'Json Table Demo',
-      theme: ThemeData(
-        primarySwatch: _colors[_currentIndex],
-      ),
+        theme: theme.getTheme(),
+//      theme: ThemeData(
+//        primarySwatch: _colors[_currentIndex],
+//      ),
       debugShowCheckedModeBanner: false,
       home: RootPage(),
     );
@@ -46,6 +58,7 @@ class MyApp extends StatelessWidget {
 class RootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -71,10 +84,13 @@ class RootPage extends StatelessWidget {
                 print("Selected: " + Choice.title);
                 print("Current color number: $_currentIndex");
 
-                if (Choice.action == "color") {
-                  _showColorPopup(context);
+                if (Choice.title == "Light Theme") {
+                  _themeChanger.setTheme(ThemeData.light());
                 }
-                if (Choice.action == "about") {
+                if (Choice.title == "Dark Theme") {
+                  _themeChanger.setTheme(ThemeData.dark());
+                }
+                if (Choice.title == "about") {
                   _showAboutPopup(context);
                 }
               },
@@ -89,6 +105,25 @@ class RootPage extends StatelessWidget {
             ),
           ],
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Json Table'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.business),
+              title: Text('Data Grid'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school),
+              title: Text('Paginated Table'),
+            ),
+          ],
+//          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+//          onTap: _onItemTapped,
+        ),
         body: TabBarView(
           children: <Widget>[
             SimpleTable(),
@@ -96,47 +131,8 @@ class RootPage extends StatelessWidget {
             PaginatedGrid(),
           ],
         ),
-      ),
-    );
-  }
 
-  void _showColorPopup(context){
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("App Color"),
-          content: new Text("Choose from colors below:"),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Blue"),
-              onPressed: () {
-                updateColor(0);
-                Navigator.of(context).pop();
-                build(context);
-              },
-            ),
-            new FlatButton(
-              child: new Text("Red"),
-              onPressed: () {
-                updateColor(1);
-                Navigator.of(context).pop();
-                build(context);
-              },
-            ),
-            new FlatButton(
-              child: new Text("Yellow"),
-              onPressed: () {
-                updateColor(2);
-                Navigator.of(context).pop();
-                build(context);
-              },
-            ),
-          ],
-        );
-      },
+      ),
     );
   }
 
@@ -173,9 +169,9 @@ class Choice {
   final String title;
   final String action;
 }
-
 const List<Choice> choices = <Choice>[
-  Choice(title: 'App color', action: "color"),
+  Choice(title: 'Light Theme',),
+  Choice(title: 'Dark Theme'),
   Choice(title: 'About', action: "about"),
 
 ];
