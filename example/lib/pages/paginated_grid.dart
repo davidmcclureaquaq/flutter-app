@@ -9,10 +9,11 @@ class GridData {
   final double mmv;
   final double epd;
 
+
   bool selected = false;
 }
 
-class DessertDataSource extends DataTableSource {
+class GridDataSource extends DataTableSource {
   final List<GridData> _gridData = <GridData>[
     GridData('JGLOBAL',                        -5504397.0999,  4541942.3117,  -8528154.7479,  -8523392.7486,  87),
     GridData('Ice cream sandwich',                   237,  9.0,  54353437,  4.3, 129),
@@ -60,7 +61,7 @@ class DessertDataSource extends DataTableSource {
 
     GridData('Coconut slice and frozen yogurt',      318, 21.0,  315,  5.5,  96),
     GridData('Coconut slice and ice cream sandwich', 396, 24.0,  44,  5.8, 138),
-    GridData('Coconut slice and eclair',             421, 31.0,  31,  7.5, 346),
+    GridData('Coconut slice and eclaire',             421, 31.0,  31,  7.5, 346),
     GridData('Coconut slice and cupcake',            464, 18.7,  74,  5.8, 422),
     GridData('Coconut slice and gingerbread',        515, 31.0,  56,  5.4, 316),
     GridData('Coconut slice and jelly bean',         534, 15.0, 101,  1.5,  59),
@@ -69,6 +70,9 @@ class DessertDataSource extends DataTableSource {
     GridData('Coconut slice and donut',              611, 40.0,  58,  6.4, 335),
     GridData('Coconut slice and KitKat',             677, 41.0,  72,  8.5,  63),
   ];
+
+  Set<String> headerList = {"Hierarchy", "POS", "BNLMDT", "BNLTYD", "MMV", "EPD"};
+  Set<String> filterHeaderList = {"Hierarchy", "Position", "BNLMDT", "BNLTYD", "MMV", "EPD"};
 
   void _sort<T>(Comparable<T> getField(GridData d), bool ascending) {
     _gridData.sort((GridData a, GridData b) {
@@ -91,39 +95,39 @@ class DessertDataSource extends DataTableSource {
     assert(index >= 0);
     if (index >= _gridData.length)
       return null;
-    final GridData dessert = _gridData[index];
+    final GridData gridData = _gridData[index];
     return DataRow.byIndex(
       index: index,
-      selected: dessert.selected,
-      onSelectChanged: (bool value) {
-        if (dessert.selected != value) {
-          _selectedCount += value ? 1 : -1;
-          assert(_selectedCount >= 0);
-          dessert.selected = value;
-          notifyListeners();
-        }
-      },
+//      selected: gridData.selected,
+//      onSelectChanged: (bool value) {
+//        if (gridData.selected != value) {
+//          _selectedCount += value ? 1 : -1;
+//          assert(_selectedCount >= 0);
+//          gridData.selected = value;
+//          notifyListeners();
+//        }
+//      },
       cells: <DataCell>[
-        DataCell(Text('${dessert.hierarchy}')),
-        DataCell(Text('${dessert.pos}',
+        DataCell(Text('${gridData.hierarchy}')),
+        DataCell(Text('${gridData.pos}',
             style: TextStyle(
-                color: setColor(dessert.pos),
+                color: setColor(gridData.pos),
                 fontSize: 14))),
-        DataCell(Text('${dessert.bnlmdt}',
+        DataCell(Text('${gridData.bnlmdt}',
             style: TextStyle(
-                color: setColor(dessert.bnlmdt),
+                color: setColor(gridData.bnlmdt),
                 fontSize: 14))),
-        DataCell(Text('${dessert.bnltyd}',
+        DataCell(Text('${gridData.bnltyd}',
             style: TextStyle(
-                color: setColor(dessert.bnltyd),
+                color: setColor(gridData.bnltyd),
                 fontSize: 14))),
-        DataCell(Text('${dessert.mmv}',
+        DataCell(Text('${gridData.mmv}',
             style: TextStyle(
-                color: setColor(dessert.mmv),
+                color: setColor(gridData.mmv),
                 fontSize: 14))),
-        DataCell(Text('${dessert.epd}',
+        DataCell(Text('${gridData.epd}',
             style: TextStyle(
-                color: setColor(dessert.epd),
+                color: setColor(gridData.epd),
                 fontSize: 14)))
       ],
     );
@@ -138,12 +142,6 @@ class DessertDataSource extends DataTableSource {
   @override
   int get selectedRowCount => _selectedCount;
 
-  void _selectAll(bool checked) {
-    for (GridData dessert in _gridData)
-      dessert.selected = checked;
-    _selectedCount = checked ? _gridData.length : 0;
-    notifyListeners();
-  }
 }
 
 class PaginatedGrid extends StatefulWidget {
@@ -157,10 +155,10 @@ class _PaginatedGrid extends State<PaginatedGrid> {
   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int _sortColumnIndex;
   bool _sortAscending = true;
-  final DessertDataSource _dessertsDataSource = DessertDataSource();
+  final GridDataSource _gridDataSource = GridDataSource();
 
   void _sort<T>(Comparable<T> getField(GridData d), int columnIndex, bool ascending) {
-    _dessertsDataSource._sort<T>(getField, ascending);
+    _gridDataSource._sort<T>(getField, ascending);
     setState(() {
       _sortColumnIndex = columnIndex;
       _sortAscending = ascending;
@@ -172,16 +170,71 @@ class _PaginatedGrid extends State<PaginatedGrid> {
     return Scaffold(
       body: Scrollbar(
         child: ListView(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(0.0),
           children: <Widget>[
+            Container(
+              child: ExpansionTile(
+                leading: Icon(Icons.filter_list),
+                title: Text(
+                  "ADD FILTERS (${_gridDataSource.headerList.length})",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                children: <Widget>[
+                  Wrap(
+                    runSpacing: -12,
+                    direction: Axis.horizontal,
+                    children: <Widget>[
+                      for(String header in _gridDataSource.headerList)
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Checkbox(
+                                  value: this._gridDataSource.filterHeaderList.contains(header),
+                                  onChanged: null,
+                                ),
+                                Text(header),
+                                SizedBox(
+                                  width: 4.0,
+                                ),
+                              ],
+                            ),
+                            onTap: () {
+                              setState(() {
+                                if (this._gridDataSource.filterHeaderList.contains(header))
+                                  this._gridDataSource.filterHeaderList.remove(header);
+                                else
+                                  this._gridDataSource.filterHeaderList.add(header);
+                              });
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             PaginatedDataTable(
               header: const Text('Nutrition'),
               rowsPerPage: _rowsPerPage,
+              columnSpacing: 20,
               onRowsPerPageChanged: (int value) { setState(() { _rowsPerPage = value; }); },
               sortColumnIndex: _sortColumnIndex,
               sortAscending: _sortAscending,
-              onSelectAll: _dessertsDataSource._selectAll,
+//              onSelectAll: _gridDataSource._selectAll,
               columns: <DataColumn>[
+//                for(String header in _gridDataSource.filterHeaderList)
+//                  DataColumn(label: Text(header,
+//                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+//                    onSort: (int columnIndex, bool ascending) => _sort<String>((GridData d) => d.hierarchy, columnIndex, ascending),
+//
+//                  ),
                 DataColumn(
                   label: const Text('Hierarchy',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
@@ -219,7 +272,7 @@ class _PaginatedGrid extends State<PaginatedGrid> {
                 ),
 
               ],
-              source: _dessertsDataSource,
+              source: _gridDataSource,
             ),
           ],
         ),

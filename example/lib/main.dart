@@ -56,6 +56,14 @@ class MaterialAppWithTheme extends StatelessWidget {
 }
 
 class RootPage extends StatelessWidget {
+
+  int _selectedPage = 0;
+  final _pageOptions = [
+    Text('Json Table'),
+    Text('Data Grid'),
+    Text('Paginated Grid')
+  ];
+
   @override
   Widget build(BuildContext context) {
     ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
@@ -105,33 +113,6 @@ class RootPage extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Json Table'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              title: Text('Data Grid'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              title: Text('Paginated Table'),
-            ),
-          ],
-//          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
-//          onTap: _onItemTapped,
-        ),
-        body: TabBarView(
-          children: <Widget>[
-            SimpleTable(),
-            DataGrid(),
-            PaginatedGrid(),
-          ],
-        ),
-
       ),
     );
   }
