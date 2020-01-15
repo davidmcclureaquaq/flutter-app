@@ -9,6 +9,9 @@ import 'pages/data_grid.dart';
 import 'pages/paginated_grid.dart';
 import 'pages/simple_table.dart';
 
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/io.dart';
+
 
 void enablePlatformOverrideForDesktop() {
   if (!kIsWeb && (Platform.isMacOS || Platform.isWindows || Platform.isLinux)) {
@@ -50,19 +53,18 @@ class MaterialAppWithTheme extends StatelessWidget {
 //        primarySwatch: _colors[_currentIndex],
 //      ),
       debugShowCheckedModeBanner: false,
-      home: RootPage(),
+      home: RootPage(
+        channel: new IOWebSocketChannel.connect("ws://echo.websocket.org")
+      ),
     );
   }
 }
 
 class RootPage extends StatelessWidget {
 
-  int _selectedPage = 0;
-  final _pageOptions = [
-    Text('Json Table'),
-    Text('Data Grid'),
-    Text('Paginated Grid')
-  ];
+  final WebSocketChannel channel;
+  RootPage({@required this.channel});
+
 
   @override
   Widget build(BuildContext context) {
@@ -113,9 +115,38 @@ class RootPage extends StatelessWidget {
             ),
           ],
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Json Table'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.business),
+              title: Text('Data Grid'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school),
+              title: Text('Paginated Table'),
+            ),
+          ],
+//          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+//          onTap: _onItemTapped,
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            SimpleTable(),
+            DataGrid(),
+            PaginatedGrid(),
+          ],
+        ),
+
       ),
     );
   }
+
+
 
   void _showAboutPopup(context){
     showDialog(
