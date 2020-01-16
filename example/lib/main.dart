@@ -4,13 +4,12 @@ import 'package:example/blocs/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'pages/data_grid.dart';
 import 'pages/paginated_grid.dart';
 import 'pages/simple_table.dart';
-
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_channel/io.dart';
 
 
 void enablePlatformOverrideForDesktop() {
@@ -60,11 +59,23 @@ class MaterialAppWithTheme extends StatelessWidget {
   }
 }
 
-class RootPage extends StatelessWidget {
+class RootPage extends StatefulWidget {
+  @override
+  _RootPage createState() => _RootPage();
 
   final WebSocketChannel channel;
   RootPage({@required this.channel});
 
+}
+
+class _RootPage extends State<RootPage> {
+
+  int _selectedIndex = 1;
+  final widgetOptions = [
+    SimpleTable(),
+    DataGrid(),
+    PaginatedGrid(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -74,19 +85,6 @@ class RootPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Meteorite Mobile"),
-          bottom: TabBar(
-          tabs: <Widget>[
-            Tab(
-            text: "Json Table",
-            ),
-            Tab(
-              text: "Data Grid",
-            ),
-            Tab(
-              text: "Paginated Grid",
-            ),
-          ],
-          ),
           actions: <Widget>[
             // overflow menu
             PopupMenuButton<Choice>(
@@ -115,6 +113,9 @@ class RootPage extends StatelessWidget {
             ),
           ],
         ),
+        body: Center(
+          child: widgetOptions.elementAt(_selectedIndex),
+        ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -130,23 +131,18 @@ class RootPage extends StatelessWidget {
               title: Text('Paginated Table'),
             ),
           ],
-//          currentIndex: _selectedIndex,
+          currentIndex: _selectedIndex,
           selectedItemColor: Colors.amber[800],
-//          onTap: _onItemTapped,
+          onTap: (index) => changeTab(index),
         ),
-        body: TabBarView(
-          children: <Widget>[
-            SimpleTable(),
-            DataGrid(),
-            PaginatedGrid(),
-          ],
-        ),
-
       ),
     );
   }
 
-
+  void changeTab(int tabIndex) {
+    setState(() {
+      _selectedIndex = tabIndex;
+    });}
 
   void _showAboutPopup(context){
     showDialog(
@@ -168,10 +164,6 @@ class RootPage extends StatelessWidget {
         );
       },
     );
-  }
-
-  void updateColor(int value) {
-    _currentIndex = value;
   }
 
 }
