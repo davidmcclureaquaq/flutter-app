@@ -232,44 +232,7 @@ class _PaginatedGrid extends State<PaginatedGrid> {
                   DataColumn(label: Text(header,
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                     onSort: (int columnIndex, bool ascending) => _sort<String>((GridData d) => d.hierarchy, columnIndex, ascending),
-
                   ),
-//                DataColumn(
-//                  label: const Text('Hierarchy',
-//                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-//                  onSort: (int columnIndex, bool ascending) => _sort<String>((GridData d) => d.hierarchy, columnIndex, ascending),
-//                ),
-//                DataColumn(
-//                  label: const Text('Position',
-//                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-//                  numeric: true,
-//                  onSort: (int columnIndex, bool ascending) => _sort<num>((GridData d) => d.pos, columnIndex, ascending),
-//                ),
-//                DataColumn(
-//                  label: const Text('BNLMDT',
-//                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-//                  numeric: true,
-//                  onSort: (int columnIndex, bool ascending) => _sort<num>((GridData d) => d.bnlmdt, columnIndex, ascending),
-//                ),
-//                DataColumn(
-//                  label: const Text('BNLTYD',
-//                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-//                  numeric: true,
-//                  onSort: (int columnIndex, bool ascending) => _sort<num>((GridData d) => d.bnltyd, columnIndex, ascending),
-//                ),
-//                DataColumn(
-//                  label: const Text('MMV',
-//                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-//                  numeric: true,
-//                  onSort: (int columnIndex, bool ascending) => _sort<num>((GridData d) => d.mmv, columnIndex, ascending),
-//                ),
-//                DataColumn(
-//                  label: const Text('EPD',
-//                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-//                  numeric: true,
-//                  onSort: (int columnIndex, bool ascending) => _sort<num>((GridData d) => d.epd, columnIndex, ascending),
-//                ),
-
               ],
               source: _gridDataSource,
             ),

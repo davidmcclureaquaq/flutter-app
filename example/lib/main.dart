@@ -4,13 +4,11 @@ import 'package:example/blocs/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'pages/data_grid.dart';
 import 'pages/paginated_grid.dart';
 import 'pages/simple_table.dart';
-
+import 'pages/web_socket.dart';
 
 void enablePlatformOverrideForDesktop() {
   if (!kIsWeb && (Platform.isMacOS || Platform.isWindows || Platform.isLinux)) {
@@ -47,14 +45,9 @@ class MaterialAppWithTheme extends StatelessWidget {
     final theme = Provider.of<ThemeChanger>(context);
     return MaterialApp(
       title: 'Json Table Demo',
-        theme: theme.getTheme(),
-//      theme: ThemeData(
-//        primarySwatch: _colors[_currentIndex],
-//      ),
+      theme: theme.getTheme(),
       debugShowCheckedModeBanner: false,
-      home: RootPage(
-        channel: new IOWebSocketChannel.connect("ws://echo.websocket.org")
-      ),
+      home: RootPage(),
     );
   }
 }
@@ -62,26 +55,22 @@ class MaterialAppWithTheme extends StatelessWidget {
 class RootPage extends StatefulWidget {
   @override
   _RootPage createState() => _RootPage();
-
-  final WebSocketChannel channel;
-  RootPage({@required this.channel});
-
 }
 
 class _RootPage extends State<RootPage> {
-
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
   final widgetOptions = [
     SimpleTable(),
     DataGrid(),
     PaginatedGrid(),
+    WebSocket(),
   ];
 
   @override
   Widget build(BuildContext context) {
     ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text("Meteorite Mobile"),
@@ -90,7 +79,6 @@ class _RootPage extends State<RootPage> {
             PopupMenuButton<Choice>(
               onSelected: (Choice) {
                 print("Selected: " + Choice.title);
-                print("Current color number: $_currentIndex");
 
                 if (Choice.title == "Light Theme") {
                   _themeChanger.setTheme(ThemeData.light());
@@ -130,6 +118,10 @@ class _RootPage extends State<RootPage> {
               icon: Icon(Icons.school),
               title: Text('Paginated Table'),
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.rss_feed),
+              title: Text('Web socket'),
+            ),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.amber[800],
@@ -142,16 +134,18 @@ class _RootPage extends State<RootPage> {
   void changeTab(int tabIndex) {
     setState(() {
       _selectedIndex = tabIndex;
-    });}
+    });
+  }
 
-  void _showAboutPopup(context){
+  void _showAboutPopup(context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Millennium mobile app"),
-          content: new Text("Version: 1.0, For more information contact dev@MLP.com"),
+          content: new Text(
+              "Version: 1.0, For more information contact dev@MLP.com"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -165,17 +159,16 @@ class _RootPage extends State<RootPage> {
       },
     );
   }
-
 }
 
 class Choice {
-  const Choice({ this.title, this.action });
+  const Choice({this.title, this.action});
   final String title;
   final String action;
 }
+
 const List<Choice> choices = <Choice>[
   Choice(title: 'Light Theme',),
   Choice(title: 'Dark Theme'),
   Choice(title: 'About', action: "about"),
-
 ];
