@@ -44,7 +44,7 @@ class MaterialAppWithTheme extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeChanger>(context);
     return MaterialApp(
-      title: 'Json Table Demo',
+      title: 'Json Table Demo ',
       theme: theme.getTheme(),
       debugShowCheckedModeBanner: false,
       home: RootPage(),
@@ -53,6 +53,7 @@ class MaterialAppWithTheme extends StatelessWidget {
 }
 
 class RootPage extends StatefulWidget {
+
   @override
   _RootPage createState() => _RootPage();
 }

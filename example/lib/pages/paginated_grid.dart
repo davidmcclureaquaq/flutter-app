@@ -170,6 +170,7 @@ class _PaginatedGrid extends State<PaginatedGrid> {
     return Scaffold(
       body: Scrollbar(
         child: ListView(
+          shrinkWrap: true,
           padding: const EdgeInsets.all(0.0),
           children: <Widget>[
             Container(
