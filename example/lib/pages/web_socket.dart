@@ -5,19 +5,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:http/http.dart' as http;
+import 'package:example/c.dart';
 
 
 Future<List<Result>> fetchResults(http.Client client) async {
   //final response = await client.get('https://api.myjson.com/bins/j5xau');
   final response = await client.get('https://api.myjson.com/bins/uxi8a');
-  print(response);
+  //print(response);
   // Use the compute function to run parseResults in a separate isolate
   return compute(parseResults, response.body);
 }
 
 // A function that will convert a response body into a List<Result>
 List<Result> parseResults(String responseBody) {
-  print(responseBody);
+  //print(responseBody);
   final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
 
   return parsed.map<Result>((json) => Result.fromJson(json)).toList();
@@ -132,10 +133,7 @@ class WebSocket extends StatefulWidget {
 
 class _WebSocketState extends State<WebSocket> {
   TextEditingController editingController = new TextEditingController();
-  //Connecting laptop to mobile hotspot in order for mobile to access laptop localhost
-  //IP below taken from running ipconfig in cmd
-  IOWebSocketChannel channel5 =
-      new IOWebSocketChannel.connect('ws://192.168.43.152:9898');
+  IOWebSocketChannel channel5 = new IOWebSocketChannel.connect('ws://192.168.1.142:9898');
   StreamController<String> streamController =
       new StreamController.broadcast(); //Add .broadcast here
   ResultsDataSource _resultsDataSource = ResultsDataSource([]);
@@ -163,11 +161,23 @@ class _WebSocketState extends State<WebSocket> {
     }
   }
 
+  Future<void> setData(String data) async {
+    final results = data;
+    if (!isLoaded) {
+      setState(() {
+        _resultsDataSource = ResultsDataSource(parseResults(results));
+        isLoaded = true;
+      });
+    }
+  }
+
 
   @override
   initState() {
     super.initState();
-    print("Creating a StreamController...");
+    c qConnector = new c();
+
+    print("Creating a StreamController..");
     //First subscription
     streamController.stream.listen((data) {
       print("DataReceived1: " + data);
@@ -184,14 +194,16 @@ class _WebSocketState extends State<WebSocket> {
     }, onError: (error) {
       print("Some Error2");
     });
-
     channel5.stream.asBroadcastStream().listen((data) {
-      print("Channel Data Received: " + data);
+      print("Channel Data Received: ");
+      print(data);
+      setData(data);
     }, onDone: () {
-      print("channel Done1");
+      print("channel 5 Done");
     }, onError: (error) {
-      print("Some Error1");
+      print("Channel 5 Error: "+error);
     });
+
 
     streamController.add("This a test data");
     print("code controller is here");
@@ -199,7 +211,8 @@ class _WebSocketState extends State<WebSocket> {
 
   @override
   Widget build(BuildContext context) {
-    getData();
+   // getData();
+
     return new Scaffold(
       body: ListView(padding: const EdgeInsets.all(00.0), children: <Widget>[
         PaginatedDataTable(

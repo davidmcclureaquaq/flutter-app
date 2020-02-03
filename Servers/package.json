@@ -1,0 +1,21 @@
+{
+  "name": "yes",
+  "version": "1.0.0",
+  "description": "websocket",
+  "main": "websocketServer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bufferutil": "^4.0.1",
+    "bytecode": "^1.1.0",
+    "node-q": "^2.4.4",
+    "node-serialize": "0.0.4",
+    "utf-8-validate": "^5.0.2",
+    "websocket": "^1.0.31",
+    "websockets": "^0.2.0",
+    "ws": "^7.2.1"
+  }
+}

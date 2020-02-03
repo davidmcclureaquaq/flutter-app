@@ -74,7 +74,7 @@ class _RootPage extends State<RootPage> {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Meteorite Mobile"),
+          title: Text("Meteorite Mobile "),
           actions: <Widget>[
             // overflow menu
             PopupMenuButton<Choice>(
