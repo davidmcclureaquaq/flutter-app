@@ -3,15 +3,13 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/io.dart';
 import 'package:http/http.dart' as http;
-import 'package:example/c.dart';
+import 'package:web_socket_channel/io.dart';
 
 
 Future<List<Result>> fetchResults(http.Client client) async {
   //final response = await client.get('https://api.myjson.com/bins/j5xau');
   final response = await client.get('https://api.myjson.com/bins/uxi8a');
-  //print(response);
   // Use the compute function to run parseResults in a separate isolate
   return compute(parseResults, response.body);
 }
@@ -74,15 +72,6 @@ class ResultsDataSource extends DataTableSource {
     final Result result = _results[index];
     return DataRow.byIndex(
         index: index,
-//        selected: result.selected,
-//        onSelectChanged: (bool value) {
-//          if (result.selected != value) {
-//            _selectedCount += value ? 1 : -1;
-//            assert(_selectedCount >= 0);
-//            result.selected = value;
-//            notifyListeners();
-//          }
-//        },
         cells: <DataCell>[
           DataCell(Text('${result.hierarchy}')),
           DataCell(Text('${result.position}',
@@ -151,16 +140,6 @@ class _WebSocketState extends State<WebSocket> {
     });
   }
 
-  Future<void> getData() async {
-    final results = await fetchResults(http.Client());
-    if (!isLoaded) {
-      setState(() {
-        _resultsDataSource = ResultsDataSource(results);
-        isLoaded = true;
-      });
-    }
-  }
-
   Future<void> setData(String data) async {
     final results = data;
     if (!isLoaded) {
@@ -175,25 +154,6 @@ class _WebSocketState extends State<WebSocket> {
   @override
   initState() {
     super.initState();
-    c qConnector = new c();
-
-    print("Creating a StreamController..");
-    //First subscription
-    streamController.stream.listen((data) {
-      print("DataReceived1: " + data);
-    }, onDone: () {
-      print("Task Done1");
-    }, onError: (error) {
-      print("Some Error1");
-    });
-    //Second subscription
-    streamController.stream.listen((data) {
-      print("DataReceived2: " + data);
-    }, onDone: () {
-      print("Task Done2");
-    }, onError: (error) {
-      print("Some Error2");
-    });
     channel5.stream.asBroadcastStream().listen((data) {
       print("Channel Data Received: ");
       print(data);
@@ -203,9 +163,6 @@ class _WebSocketState extends State<WebSocket> {
     }, onError: (error) {
       print("Channel 5 Error: "+error);
     });
-
-
-    streamController.add("This a test data");
     print("code controller is here");
   }
 
