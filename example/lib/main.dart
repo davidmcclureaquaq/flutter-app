@@ -9,6 +9,7 @@ import 'pages/data_grid.dart';
 import 'pages/paginated_grid.dart';
 import 'pages/simple_table.dart';
 import 'pages/web_socket.dart';
+import 'pages/local_notifications.dart';
 
 void enablePlatformOverrideForDesktop() {
   if (!kIsWeb && (Platform.isMacOS || Platform.isWindows || Platform.isLinux)) {
@@ -65,13 +66,14 @@ class _RootPage extends State<RootPage> {
     DataGrid(),
     PaginatedGrid(),
     WebSocket(),
+    Notifications(),
   ];
 
   @override
   Widget build(BuildContext context) {
     ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         appBar: AppBar(
           title: Text("Meteorite Mobile "),
@@ -122,6 +124,10 @@ class _RootPage extends State<RootPage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.rss_feed),
               title: Text('Web socket'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              title: Text('Notifications'),
             ),
           ],
           currentIndex: _selectedIndex,
