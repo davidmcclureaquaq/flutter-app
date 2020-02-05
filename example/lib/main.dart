@@ -93,7 +93,7 @@ class _RootPage extends State<RootPage> {
                 if (Choice.title == "Dark Theme") {
                   _themeChanger.setTheme(ThemeData.dark());
                 }
-                if (Choice.title == "about") {
+                if (Choice.title == "About") {
                   _showAboutPopup(context);
                 }
               },

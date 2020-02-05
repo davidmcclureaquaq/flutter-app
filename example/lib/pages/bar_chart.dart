@@ -16,22 +16,31 @@ class BarChart extends StatelessWidget {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return new charts.BarChart(
-      seriesList,
-      animate: animate,
-    );
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Bar chart'),
+          backgroundColor: Colors.black54,
+        ),
+        body: charts.BarChart(
+          seriesList,
+          animate: animate,
+        ));
+
+//    return new charts.BarChart(
+//      seriesList,
+//      animate: animate,
+//    );
   }
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<Trade, String>> _createSampleData() {
     final data = [
-      new Trade('time', 'AMD', 10.5, 11.5, Colors.red),
-      new Trade('time', 'GOOG', 335.2, 336.5, Colors.blue),
-      new Trade('time', 'OIL', 22, 24, Colors.yellow),
-      new Trade('time', 'LLOY', 57, 58, Colors.green),
+      new Trade('AMD', 10.5, 11.5, Colors.red, new DateTime(2017, 9, 19)),
+      new Trade('GOOG', 335.2, 336.5, Colors.blue, new DateTime(2017, 9, 19)),
+      new Trade('OIL', 22, 24, Colors.yellow, new DateTime(2017, 9, 19)),
+      new Trade('LLOY', 57, 58, Colors.green, new DateTime(2017, 9, 19)),
     ];
 
     return [
@@ -45,5 +54,4 @@ class BarChart extends StatelessWidget {
       )
     ];
   }
-
 }

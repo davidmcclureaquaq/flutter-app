@@ -109,7 +109,7 @@ class _DataGridState extends State<DataGrid> {
 
   void sortColumn(int columnIndex) {
     setState(() {
-      if(isSorted == false) {
+      if (isSorted == false) {
         if (columnIndex == 1) {
           sampledata.sort((a, b) => a.Hierarchy.compareTo(b.Hierarchy));
         }
@@ -156,6 +156,10 @@ class _DataGridState extends State<DataGrid> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text('Data grid'),
+          backgroundColor: Colors.black54,
+        ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: SingleChildScrollView(

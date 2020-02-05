@@ -221,7 +221,7 @@ class _PaginatedGrid extends State<PaginatedGrid> {
               ),
             ),
             PaginatedDataTable(
-              header: const Text('Nutrition'),
+              header: const Text('Paginated data table'),
               rowsPerPage: _rowsPerPage,
               columnSpacing: 10,
               onRowsPerPageChanged: (int value) { setState(() { _rowsPerPage = value; }); },
