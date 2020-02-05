@@ -149,7 +149,7 @@ class _RootPage extends State<RootPage> {
             ),
             ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
+          selectedItemColor: Colors.orange,
           onTap: (index) => changeTab(index),
         ),
       ),

@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:example/classes/Result.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:web_socket_channel/io.dart';
-import 'package:example/classes/Result.dart';
 
 class WebSocket extends StatefulWidget {
   ResultsDataSource _resultsDataSource = ResultsDataSource([]);
@@ -70,7 +70,7 @@ class _WebSocketState extends State<WebSocket> {
     return new Scaffold(
       body: ListView(padding: const EdgeInsets.all(00.0), children: <Widget>[
         PaginatedDataTable(
-            header: const Text('Census Data'),
+            header: const Text('Web Socket'),
             rowsPerPage: _rowsPerPage,
             onRowsPerPageChanged: (int value) {
               setState(() {
