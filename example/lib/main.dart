@@ -4,6 +4,7 @@ import 'package:example/blocs/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'pages/bar_chart.dart';
 import 'pages/data_grid.dart';
@@ -96,6 +97,9 @@ class _RootPage extends State<RootPage> {
                 if (Choice.title == "About") {
                   _showAboutPopup(context);
                 }
+                if (Choice.title == "Contact Us") {
+                  _showMailPopup(context);
+                }
               },
               itemBuilder: (BuildContext context) {
                 return choices.skip(0).map((Choice choice) {
@@ -184,6 +188,45 @@ class _RootPage extends State<RootPage> {
       },
     );
   }
+
+  void _showMailPopup(context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Contact Us"),
+          content: new Text(
+              "Send mail to dev@MLP.com?"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Yes"),
+              onPressed: () {
+                _launchURL();
+              },
+            ),
+            new FlatButton(
+              child: new Text("No"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _launchURL() async {
+    const url = 'mailto:<email address>?subject=<subject>&body=<body>';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
 }
 
 class Choice {
@@ -196,4 +239,5 @@ const List<Choice> choices = <Choice>[
   Choice(title: 'Light Theme',),
   Choice(title: 'Dark Theme'),
   Choice(title: 'About', action: "about"),
+  Choice(title: 'Contact Us', action: "Contact Us"),
 ];
