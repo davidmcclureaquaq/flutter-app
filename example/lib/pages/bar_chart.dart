@@ -12,18 +12,10 @@ class BarChart extends StatelessWidget {
   factory BarChart.withSampleData() {
     return new BarChart(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
+      animate: true,
     );
   }
 
-  factory BarChart.withSampleData2() {
-    return new BarChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +28,17 @@ class BarChart extends StatelessWidget {
   /// Create one series with sample hard coded data.
   static List<charts.Series<Trade, String>> _createSampleData() {
     final data = [
-      new Trade('time', 'AMD', 10.5, 11.5),
-      new Trade('time', 'GOOG', 335.2, 336.5),
-      new Trade('time', 'OIL', 22, 24),
+      new Trade('time', 'AMD', 10.5, 11.5, Colors.red),
+      new Trade('time', 'GOOG', 335.2, 336.5, Colors.blue),
+      new Trade('time', 'OIL', 22, 24, Colors.yellow),
+      new Trade('time', 'LLOY', 57, 58, Colors.green),
     ];
 
     return [
       new charts.Series<Trade, String>(
-        id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        id: 'Trades',
+        labelAccessorFn: (Trade t, _) => '${t.sym}',
+        colorFn: (Trade t, _) => charts.ColorUtil.fromDartColor(t.color),
         domainFn: (Trade t, _) => t.sym,
         measureFn: (Trade t, _) => t.ask,
         data: data,

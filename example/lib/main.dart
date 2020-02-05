@@ -80,6 +80,7 @@ class _RootPage extends State<RootPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Meteorite Mobile "),
+          backgroundColor: Colors.black54,
           actions: <Widget>[
             // overflow menu
             PopupMenuButton<Choice>(
@@ -119,26 +120,32 @@ class _RootPage extends State<RootPage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.business),
               title: Text('Data Grid'),
+              backgroundColor: Colors.black54,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.school),
               title: Text('Paginated Table'),
+              backgroundColor: Colors.black54,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.rss_feed),
               title: Text('Web socket'),
+              backgroundColor: Colors.black54,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.notifications),
               title: Text('Notifications'),
+              backgroundColor: Colors.black54,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.insert_chart),
               title: Text('Bar Chart'),
+              backgroundColor: Colors.black54,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.show_chart),
               title: Text('Line Chart'),
+              backgroundColor: Colors.black54,
             ),
             ],
           currentIndex: _selectedIndex,
