@@ -10,7 +10,6 @@ import 'pages/data_grid.dart';
 import 'pages/line_chart.dart';
 import 'pages/local_notifications.dart';
 import 'pages/paginated_grid.dart';
-import 'pages/simple_table.dart';
 import 'pages/web_socket.dart';
 
 void enablePlatformOverrideForDesktop() {
@@ -64,7 +63,7 @@ class RootPage extends StatefulWidget {
 class _RootPage extends State<RootPage> {
   int _selectedIndex = 0;
   final widgetOptions = [
-    SimpleTable(),
+    //SimpleTable(),
     DataGrid(),
     PaginatedGrid(),
     WebSocket(),
@@ -77,7 +76,7 @@ class _RootPage extends State<RootPage> {
   Widget build(BuildContext context) {
     ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
     return DefaultTabController(
-      length: 7,
+      length: 6,
       child: Scaffold(
         appBar: AppBar(
           title: Text("Meteorite Mobile "),
@@ -113,10 +112,10 @@ class _RootPage extends State<RootPage> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Json Table'),
-            ),
+//            BottomNavigationBarItem(
+//              icon: Icon(Icons.home),
+//              title: Text('Json Table'),
+//            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.business),
               title: Text('Data Grid'),
