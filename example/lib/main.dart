@@ -5,11 +5,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'pages/bar_chart.dart';
 import 'pages/data_grid.dart';
+import 'pages/line_chart.dart';
+import 'pages/local_notifications.dart';
 import 'pages/paginated_grid.dart';
 import 'pages/simple_table.dart';
 import 'pages/web_socket.dart';
-import 'pages/local_notifications.dart';
 
 void enablePlatformOverrideForDesktop() {
   if (!kIsWeb && (Platform.isMacOS || Platform.isWindows || Platform.isLinux)) {
@@ -67,13 +69,15 @@ class _RootPage extends State<RootPage> {
     PaginatedGrid(),
     WebSocket(),
     Notifications(),
+    BarChart.withSampleData(),
+    LineChart.withSampleData(),
   ];
 
   @override
   Widget build(BuildContext context) {
     ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
     return DefaultTabController(
-      length: 5,
+      length: 7,
       child: Scaffold(
         appBar: AppBar(
           title: Text("Meteorite Mobile "),
@@ -129,7 +133,15 @@ class _RootPage extends State<RootPage> {
               icon: Icon(Icons.notifications),
               title: Text('Notifications'),
             ),
-          ],
+            BottomNavigationBarItem(
+              icon: Icon(Icons.insert_chart),
+              title: Text('Bar Chart'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.show_chart),
+              title: Text('Line Chart'),
+            ),
+            ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.amber[800],
           onTap: (index) => changeTab(index),
