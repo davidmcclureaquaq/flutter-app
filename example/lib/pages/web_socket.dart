@@ -16,6 +16,7 @@ class WebSocket extends StatefulWidget {
 
 class _WebSocketState extends State<WebSocket> {
   TextEditingController editingController = new TextEditingController();
+  // update me
   IOWebSocketChannel channel5 = new IOWebSocketChannel.connect('ws://192.168.1.142:9898');
   StreamController<String> streamController =
       new StreamController.broadcast(); //Add .broadcast here
