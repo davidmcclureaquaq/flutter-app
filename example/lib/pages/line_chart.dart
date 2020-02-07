@@ -10,7 +10,7 @@ class LineChart extends StatelessWidget {
   /// Creates a [TimeSeriesChart] with sample data and no transition.
   factory LineChart.withSampleData() {
     return new LineChart(
-      _createSampleData(),
+      _createLineChartData(),
       animate: true,
     );
   }
@@ -24,11 +24,12 @@ class LineChart extends StatelessWidget {
         ),
         body: charts.TimeSeriesChart(seriesList,
             animate: animate,
-            dateTimeFactory: const charts.LocalDateTimeFactory()));
+            dateTimeFactory: const charts.LocalDateTimeFactory())
+    );
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<Trade, DateTime>> _createSampleData() {
+  static List<charts.Series<Trade, DateTime>> _createLineChartData() {
     final data = [
       new Trade('AMD', 5.5, 6.6, Colors.red, new DateTime(2017, 9, 19)),
       new Trade('AMD', 6.5, 6.6, Colors.red, new DateTime(2017, 9, 20)),
@@ -37,7 +38,7 @@ class LineChart extends StatelessWidget {
       new Trade('GOOG', 16, 18, Colors.blue, new DateTime(2017, 9, 23)),
       new Trade('GOOG', 17, 18, Colors.blue, new DateTime(2017, 9, 24)),
     ];
-  
+
     return [
       new charts.Series<Trade, DateTime>(
         id: 'Trades',
@@ -49,6 +50,4 @@ class LineChart extends StatelessWidget {
       )
     ];
   }
-
-
 }
