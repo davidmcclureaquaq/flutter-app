@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'pages/bar_chart.dart';
+import 'pages/static_charts.dart';
 import 'pages/data_grid.dart';
-import 'pages/line_chart.dart';
+import 'pages/dynamic_charts.dart';
 import 'pages/local_notifications.dart';
 import 'pages/paginated_grid.dart';
 import 'pages/web_socket.dart';
@@ -69,8 +69,8 @@ class _RootPage extends State<RootPage> {
     PaginatedGrid(),
     WebSocket(),
     Notifications(),
-    BarChart.withSampleData(),
-    LineChart.withSampleData(),
+    StaticCharts.createCharts(),
+    DynamicCharts(),
   ];
 
   @override
@@ -143,12 +143,12 @@ class _RootPage extends State<RootPage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.insert_chart),
-              title: Text('Bar Chart'),
+              title: Text('Static charts'),
               backgroundColor: Colors.black54,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.show_chart),
-              title: Text('Line Chart'),
+              title: Text('Dyn Charts'),
               backgroundColor: Colors.black54,
             ),
             ],
