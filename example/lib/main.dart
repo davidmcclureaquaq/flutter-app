@@ -12,6 +12,8 @@ import 'pages/dynamic_charts.dart';
 import 'pages/local_notifications.dart';
 import 'pages/paginated_grid.dart';
 import 'pages/web_socket.dart';
+import 'pages/navigation.dart';
+
 
 void enablePlatformOverrideForDesktop() {
   if (!kIsWeb && (Platform.isMacOS || Platform.isWindows || Platform.isLinux)) {
@@ -71,13 +73,14 @@ class _RootPage extends State<RootPage> {
     Notifications(),
     StaticCharts.createCharts(),
     DynamicCharts(),
+    Navigation(),
   ];
 
   @override
   Widget build(BuildContext context) {
     ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
     return DefaultTabController(
-      length: 6,
+      length: 7,
       child: Scaffold(
         appBar: AppBar(
           title: Text("Meteorite Mobile "),
@@ -149,6 +152,11 @@ class _RootPage extends State<RootPage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.show_chart),
               title: Text('Dyn Charts'),
+              backgroundColor: Colors.black54,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.navigation),
+              title: Text('Nav'),
               backgroundColor: Colors.black54,
             ),
             ],
