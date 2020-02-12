@@ -3,16 +3,17 @@ import 'dart:io';
 import 'package:example/blocs/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fps/flutter_fps.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'pages/static_charts.dart';
 import 'pages/data_grid.dart';
 import 'pages/dynamic_charts.dart';
 import 'pages/local_notifications.dart';
-import 'pages/paginated_grid.dart';
-import 'pages/web_socket.dart';
 import 'pages/navigation.dart';
+import 'pages/paginated_grid.dart';
+import 'pages/static_charts.dart';
+import 'pages/web_socket.dart';
 
 
 void enablePlatformOverrideForDesktop() {
@@ -75,6 +76,12 @@ class _RootPage extends State<RootPage> {
     DynamicCharts(),
     Navigation(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    Fps.instance.start(context);
+  }
 
   @override
   Widget build(BuildContext context) {
