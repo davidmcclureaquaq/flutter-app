@@ -92,6 +92,17 @@ class _RootPage extends State<RootPage> {
         appBar: AppBar(
           title: Text("Meteorite Mobile "),
           backgroundColor: Colors.black54,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RootPage()),
+              );
+            },
+            child: Icon(
+              Icons.home,  // add custom icons also
+            ),
+          ),
           actions: <Widget>[
             // overflow menu
             PopupMenuButton<Choice>(
@@ -234,7 +245,7 @@ class _RootPage extends State<RootPage> {
   }
 
   _launchURL() async {
-    const url = 'mailto:<email address>?subject=<subject>&body=<body>';
+    const url = 'mailto:dev@MLP.com?subject=<subject>&body=<body>';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

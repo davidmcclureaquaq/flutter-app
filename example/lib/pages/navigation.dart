@@ -1,6 +1,8 @@
+import 'package:example/pages/translucent_overlay.dart';
 import 'package:flutter/material.dart';
 
 import 'page_transition.dart';
+import 'translucent_overlay.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -73,6 +75,10 @@ class Navigation extends StatelessWidget {
                       type: PageTransitionType.rightToLeft,
                       child: NestedRoute()));
             },
+          ),
+          RaisedButton(
+            child: Text('Translucent overlay'),
+            onPressed: () =>     Navigator.of(context).push(TranslucentOverlay()),
           ),
         ])
 
