@@ -95,18 +95,19 @@ class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Second Route"),
-      ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go back!'),
+        appBar: AppBar(
+          title: Text("Second Route"),
         ),
-      ),
-    );
+        body: ListView(children: <Widget>[
+          Center(
+            child: RaisedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Go back!'),
+            ),
+          ),
+        ]));
   }
 }
 
@@ -114,18 +115,19 @@ class ThirdRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Third Route"),
-      ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go back!'),
+        appBar: AppBar(
+          title: Text("Third Route"),
         ),
-      ),
-    );
+        body: ListView(children: <Widget>[
+          Center(
+            child: RaisedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Go back!'),
+            ),
+          ),
+        ]));
   }
 }
 
@@ -137,21 +139,25 @@ class NestedRoute extends StatelessWidget {
           title: Text("Nested Route"),
         ),
         body: ListView(children: <Widget>[
-          RaisedButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      child: ThirdRoute()));
-            },
-            child: Text('Continue'),
+          Center(
+            child: RaisedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: ThirdRoute()));
+              },
+              child: Text('Continue'),
+            ),
           ),
-          RaisedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('Go back!'),
+          Center(
+            child: RaisedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Go back!'),
+            ),
           ),
         ]));
   }
