@@ -1,4 +1,6 @@
+import 'package:example/pages/paginated_data_table2.dart';
 import 'package:flutter/material.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 class GridData {
   GridData(this.hierarchy, this.position, this.bnlmdt, this.bnltyd, this.mmv, this.epd);
@@ -135,14 +137,14 @@ class GridDataSource extends DataTableSource {
 
 }
 
-class PaginatedGrid extends StatefulWidget {
+class PaginatedGridSticky extends StatefulWidget {
   @override
-  _PaginatedGrid createState() => _PaginatedGrid();
+  _PaginatedGridSticky createState() => _PaginatedGridSticky();
 }
 
 bool isSorted = false;
 
-class _PaginatedGrid extends State<PaginatedGrid> {
+class _PaginatedGridSticky extends State<PaginatedGridSticky> {
   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int _sortColumnIndex;
   bool _sortAscending = true;
@@ -164,6 +166,7 @@ class _PaginatedGrid extends State<PaginatedGrid> {
           shrinkWrap: true,
           padding: const EdgeInsets.all(0.0),
           children: <Widget>[
+
             Container(
               child: ExpansionTile(
                 leading: Icon(Icons.filter_list),
@@ -186,7 +189,7 @@ class _PaginatedGrid extends State<PaginatedGrid> {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
-                                Checkbox(
+                                  Checkbox(
                                   value: this._gridDataSource.filterHeaderList.contains(header),
                                   onChanged: null,
                                 ),
@@ -211,8 +214,19 @@ class _PaginatedGrid extends State<PaginatedGrid> {
                 ],
               ),
             ),
-            PaginatedDataTable(
-              header: const Text('Paginated data table'),
+
+            StickyHeader(
+            header: Container(
+            height: 50.0,
+            color: Colors.blueGrey[700],
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            alignment: Alignment.centerLeft,
+            child: Text('Header ',
+                    style: const TextStyle(color: Colors.white),
+                    ),
+            ),
+            content:
+            PaginatedDataTable2(
               rowsPerPage: _rowsPerPage,
               columnSpacing: 10,
               onRowsPerPageChanged: (int value) { setState(() { _rowsPerPage = value; }); },
@@ -228,6 +242,9 @@ class _PaginatedGrid extends State<PaginatedGrid> {
               ],
               source: _gridDataSource,
             ),
+            ),
+
+
           ],
         ),
       ),

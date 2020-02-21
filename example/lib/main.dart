@@ -12,6 +12,7 @@ import 'pages/dynamic_charts.dart';
 import 'pages/local_notifications.dart';
 import 'pages/navigation.dart';
 import 'pages/paginated_grid.dart';
+import 'pages/paginated_grid_sticky.dart';
 import 'pages/static_charts.dart';
 import 'pages/web_socket.dart';
 
@@ -70,6 +71,7 @@ class _RootPage extends State<RootPage> {
     //SimpleTable(),
     DataGrid(),
     PaginatedGrid(),
+    PaginatedGridSticky(),
     WebSocket(),
     Notifications(),
     StaticCharts.createCharts(),
@@ -87,7 +89,7 @@ class _RootPage extends State<RootPage> {
   Widget build(BuildContext context) {
     ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
     return DefaultTabController(
-      length: 7,
+      length: 8,
       child: Scaffold(
         appBar: AppBar(
           title: Text("Meteorite Mobile "),
@@ -150,6 +152,11 @@ class _RootPage extends State<RootPage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.school),
               title: Text('Paginated Table'),
+              backgroundColor: Colors.black54,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school),
+              title: Text('Sticky'),
               backgroundColor: Colors.black54,
             ),
             BottomNavigationBarItem(
